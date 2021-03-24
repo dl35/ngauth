@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+
+  angular:
+    build:
+      context: angular/.
+    container_name: ng-angular
+    image: ng/node-angular-cli:1.0
+    entrypoint: /bin/sh
+    stdin_open: true
+    tty: true
+    user: ${CURRENT_UID}
+    #depends_on:
+    #  - node
+    environment:
+       -  UID=1000
+       -  GID=1000
+    volumes: 
+      - ../app:/app
+    ports:
+      - 4200:4200
+    networks:
+      - ng_node-network
+      
+      
+  node:
+    build:
+      context: express/.
+    container_name: ng-node
+    image: ng/node:1.0
+    depends_on:
+      - mysql
+    entrypoint: /bin/sh
+    user: ${CURRENT_UID}
+    volumes:
+      - ../node:/app  
+    ports:
+      - 3000:3000  
+    networks:
+      - ng_node-network  
+      
+
+  mysql:
+      image: mysql:5.6.40
+      container_name: ng-mysql
+      environment:
+           MYSQL_DATABASE: prod
+           MYSQL_USER: prod
+           MYSQL_PASSWORD: prod
+           MYSQL_ROOT_PASSWORD: prod
+      volumes:
+        - ../database:/var/lib/mysql
+      restart: always
+      networks:
+        - ng_node-network
+
+
+networks:
+  ng_node-network:
