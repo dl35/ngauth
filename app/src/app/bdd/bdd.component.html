@@ -1,0 +1,33 @@
+<div class="bddtitle">
+<p><span><strong>Manage Bdd</strong></span></p>
+</div>
+
+
+<div  class='bddcenter'>
+
+<div>
+<p><span><strong>Api-Books</strong></span></p>
+<mat-button-toggle  (click)="createBooks()">Create</mat-button-toggle> &nbsp; 
+<mat-button-toggle  (click)="deleteBooks()">Delete</mat-button-toggle> &nbsp;
+<mat-button-toggle  (click)="dropBooks()">Drop</mat-button-toggle> 
+
+</div>
+
+<br>
+<hr>
+<div *ngIf="info?.message"  [@fade]="info" [style.color]="info.status === 200 ? 'green' : 'red'"  >
+{{ info.status }}  ,  {{ info.message  }}
+</div>
+
+<hr>
+<br>
+
+<div>
+<p><span><strong>Api-Sports</strong></span></p>
+<mat-button-toggle  (click)="createSports()">Create</mat-button-toggle> &nbsp; 
+<mat-button-toggle  (click)="deleteSports()">Delete</mat-button-toggle> &nbsp;
+<mat-button-toggle  (click)="dropSports()">Drop</mat-button-toggle>   
+</div>
+
+
+</div>

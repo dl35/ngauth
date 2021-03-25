@@ -1,0 +1,48 @@
+<div class='cbooks'>
+    <div>
+    <pre>
+    crud of sports avec pagination
+    filtre de recheche 
+    utilisation de behaviorSubject dans le service 
+    méthodes get, post, put, delete ...
+    filtre de recherches
+    pipe async
+    </pre>
+    </div>
+    <div *ngIf="(datas$ | async) ;let list">
+    <pre>
+    total items: {{ list.total }}
+    nombre pages: {{ page }} / {{list.pages}}    
+    items / page: {{list.datas.length}}
+    </pre>
+    </div>
+
+    <div>
+        <button mat-flat-button color="primary" [disabled]="page == 1" (click)="toPage(1)"      ><< First</button> &nbsp; 
+        <button mat-flat-button color="primary" [disabled]="page == 1" (click)="toPage(page-1)"      >< Prec</button> &nbsp;
+        <button mat-flat-button color="primary" [disabled]="page == nbpages" (click)="toPage(+page+1)"   >Next ></button>&nbsp; 
+        <button mat-flat-button color="primary" [disabled]="page == nbpages"  (click)="toPage(nbpages)"   >Last >></button> 
+      </div>
+
+
+    <mat-form-field class="cform-field">
+        <mat-label>rechercher...</mat-label>
+        <input matInput type="text" [formControl]="search">
+      </mat-form-field>
+      &nbsp;&nbsp;
+ 
+
+    <mat-button-toggle  (click)="post()">Add</mat-button-toggle> &nbsp; 
+
+    <div *ngFor="let item of (datas$ | async)?.datas " >
+      
+        <pre>
+          <mat-button-toggle  (click)="put(item)">Put(id: {{ item.id }})</mat-button-toggle>&nbsp;&nbsp;<mat-button-toggle  (click)="delete(item)">Delete(id: {{ item.id }})</mat-button-toggle><br>
+           date: {{ item.day | date: 'medium' }}
+           firstname: {{ item.firstname  }}
+           lastname: {{ item.lastname  }}
+        </pre>
+        
+    </div>
+    </div>
+

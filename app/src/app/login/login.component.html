@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+    <span>Supervision  PUSHPROD</span>
+  </mat-toolbar>
+  
+  <form  style="margin: 0 auto;text-align: center;"    autocomplete="off" [formGroup]="dataForm" (ngSubmit)="doSignUp()"  novalidate>  
+
+  <div style="margin-top:35px" >
+      <div style="width:100%" > 
+        <mat-icon color="primary" >perm_identity</mat-icon>
+        <mat-form-field  style="width:40%"  >
+          <input matInput placeholder="Utilisateur"  formControlName="user"  >
+          <mat-error>une adresse email valide est requise</mat-error>
+          <mat-hint>Veuillez saisir votre adresse email</mat-hint>
+        </mat-form-field>
+      </div>
+      </div>
+
+      <div style="margin-top:15px"  >
+          <div style="width:100%" > 
+            <mat-icon color="primary" >lock</mat-icon>
+            <mat-form-field style="width:40%" >
+              <input matInput placeholder="Mot de passe" type="password"   formControlName="pwd"  >
+              <mat-error>un mot de passe requis </mat-error>
+              <mat-hint>Veuillez saisir votre mot de passe</mat-hint>
+            </mat-form-field>
+          </div>
+          </div>
+          
+          <div  style="margin-top:15px" >
+          <div>
+          <button mat-raised-button color="primary"  type="submit"  [disabled]="dataForm.invalid"    >
+              <mat-icon>play_arrow</mat-icon>
+              Login</button>
+            </div>
+       
+          </div>
+
+</form>
