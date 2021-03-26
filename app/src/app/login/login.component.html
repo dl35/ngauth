@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-    <span>Supervision  PUSHPROD</span>
+    <span>Login</span>
   </mat-toolbar>
   
   <form  style="margin: 0 auto;text-align: center;"    autocomplete="off" [formGroup]="dataForm" (ngSubmit)="doSignUp()"  novalidate>  
@@ -19,7 +19,7 @@
           <div style="width:100%" > 
             <mat-icon color="primary" >lock</mat-icon>
             <mat-form-field style="width:40%" >
-              <input matInput placeholder="Mot de passe" type="password"   formControlName="pwd"  >
+              <input matInput placeholder="Mot de passe" type="password"   formControlName="passwd"  >
               <mat-error>un mot de passe requis </mat-error>
               <mat-hint>Veuillez saisir votre mot de passe</mat-hint>
             </mat-form-field>

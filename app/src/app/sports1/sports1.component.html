@@ -36,12 +36,32 @@
 
     <div *ngFor="let item of (datas$ | async)?.datas " >
       
-        <pre>
-          <mat-button-toggle  (click)="put(item)">Put(id: {{ item.id }})</mat-button-toggle>&nbsp;&nbsp;<mat-button-toggle  (click)="delete(item)">Delete(id: {{ item.id }})</mat-button-toggle><br>
-           date: {{ item.day | date: 'medium' }}
-           firstname: {{ item.firstname  }}
-           lastname: {{ item.lastname  }}
-        </pre>
+   
+      <mat-card class="mat-elevation-z5 style-card">
+        <mat-card-header>
+        
+          <div mat-card-avatar >
+            <button mat-mini-fab color="accent" aria-label="Example icon button with a delete icon">
+              <mat-icon *ngIf=" item.discipline == 'SWIM'">pool</mat-icon>
+              <mat-icon *ngIf=" item.discipline == 'BIKE'">directions_bike</mat-icon>
+              <mat-icon *ngIf=" item.discipline == 'RUNNING'">run_circle</mat-icon>
+            </button>
+          </div>
+          <mat-card-title> {{ item.firstname  }} {{ item.lastname  }} </mat-card-title>
+          <mat-card-subtitle>{{ item.discipline }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ item.day | date: 'medium' }}</mat-card-subtitle>
+          <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon">
+            <mat-icon>edit</mat-icon>
+          </button>&nbsp;&nbsp;
+          <button mat-mini-fab color="warn" aria-label="Example icon button with a delete icon">
+            <mat-icon>delete</mat-icon>
+          </button>
+      
+        </mat-card-header>
+        </mat-card>
+    
+        
+
         
     </div>
     </div>

@@ -13,7 +13,7 @@ export class Sports1Service {
   private subject = new BehaviorSubject<MySportsPage|null>(null) ;
   datas$ = this.subject.asObservable();
  
-  url = "/sports";
+  url = "/api/sports";
   constructor(private http:  HttpClient ) { }
 
   get(page: number , search: string): any {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
   initForm() {
     this.dataForm = this.formBuilder.group({
       // tslint:disable-next-line:max-line-length
-      user: [ 'test@meteo.fr'  , [Validators.required , Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$') ] ]  ,
-      pwd: [ 'test', [Validators.required,  Validators.minLength(4)] ]
+      user: [ 'admin@test.fr'  , [Validators.required , Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$') ] ]  ,
+      passwd: [ 'admin', [Validators.required,  Validators.minLength(4)] ]
                                         });
   }
 
@@ -41,7 +41,7 @@ doSignUp() {
 
 this.loginService.signup( this.dataForm.value  ).subscribe(
 // tslint:disable-next-line:max-line-length
-(data)  =>   {  sessionStorage.setItem('token' , data.token )  ;     this.router.navigate(['/']) ;  } ,
+(data)  =>   {  sessionStorage.setItem('token' , data.token )  ;   sessionStorage.setItem('role' , data.role )  ;    this.router.navigate(['/']) ;  } ,
 (error) => {
   } ,
 () => {}

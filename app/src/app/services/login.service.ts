@@ -1,13 +1,14 @@
 import { Muser } from './../datas/muser';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { isNamedExportBindings } from 'typescript';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  url = '/ws/public/visu/signup' ;
+  url = '/api/login' ;
 
   constructor(private http: HttpClient) {
   }
@@ -26,6 +27,11 @@ export class LoginService {
   } else {
     return true;
   }
-
 }
+  isAdmin() {
+     return ( sessionStorage.getItem('role') === 'admin' ) 
+
+  }
+
+
 }

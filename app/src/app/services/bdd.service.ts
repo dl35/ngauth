@@ -8,8 +8,8 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class BddService  {
 
- usports = '/bdd/sports' ;
- usbooks = '/bdd/books' ;
+ usports = '/api/bdd/sports' ;
+
 
   constructor(private http: HttpClient) { }
 
@@ -32,23 +32,6 @@ export class BddService  {
               catchError(this.errorHandler)
         ); }
 
-  public createBooks(): Observable<string> {
-  const u = this.usbooks + '/create';
-  return this.http.get<any>( u ).pipe(
-          catchError(this.errorHandler)
-  ); }
-
-  public deleteBooks(): Observable<string> {
-    const u = this.usbooks + '/delete';
-    return this.http.get<any>( u ).pipe(
-          catchError(this.errorHandler)
-    ); }
-
-  public dropBooks(): Observable<string> {
-      const u = this.usbooks + '/drop';
-      return this.http.get<any>( u ).pipe(
-            catchError(this.errorHandler)
-      ); }
 
 
 

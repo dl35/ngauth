@@ -44,33 +44,6 @@ export class BddComponent implements OnInit , OnDestroy {
 
   }
 
-createBooks(): void {
-
-  this.serv.createBooks().pipe(
-     takeUntil(this.subjects$),
-     catchError( err =>  of(err) )
-     ).subscribe(
-      m  =>   this.setMessage( m )
-      );
-}
-
-deleteBooks(): void {
-  this.serv.deleteBooks().pipe(
-     takeUntil(this.subjects$) ,
-     catchError( err =>  of(err) )
-     ).subscribe(
-    m =>    this.setMessage( m )
-) ;
-}
-
-dropBooks(): void {
-  this.serv.dropBooks().pipe( 
-    takeUntil(this.subjects$),
-    catchError( err =>  of(err) )
-    ).subscribe(
-    m =>    this.setMessage( m )
-) ;
-}
 
 
 

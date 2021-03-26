@@ -1,5 +1,5 @@
 export interface Muser {
     token: string;
-    profile: string;
-    prod: string ;
+    role: 'admin' | 'user' ;
+    id: number ;
   }

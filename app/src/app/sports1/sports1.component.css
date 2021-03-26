@@ -2,13 +2,12 @@ body {
     text-align: center;
 }
 
-.cbooks {
 
+
+.style-card {
+    margin:0 auto;
     margin-top: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
-    
-
+    width: 60%;
 }
 
 div .cform-field
