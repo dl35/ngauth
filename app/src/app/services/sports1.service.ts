@@ -16,6 +16,7 @@ export class Sports1Service {
   url = "/api/sports";
   constructor(private http:  HttpClient ) { }
 
+  /*
   get(page: number , search: string): any {
     let surl =this.url + '/pages/' +  page ;
     let params = {};
@@ -28,7 +29,21 @@ export class Sports1Service {
                      ).subscribe(
                           m => this.subject.next(m)
                      )
+  }*/
+
+  get(page: number , search: any ): any {
+    let surl =this.url + '/pages/' +  page ;
+    let params = {};
+    if( search ) {
+    params = new HttpParams().set('search', '' ) ;
+        }
+    return this.http.get<MySportsPage>( surl ,  {params}   ).pipe(
+                      shareReplay(1),
+                      catchError(this.errorHandler)
+                     );
   }
+
+
 
   delete(id: number): any {
     let surl =this.url +'/'+ id ;

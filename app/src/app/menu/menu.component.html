@@ -1,9 +1,12 @@
 
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <span  *ngIf="isadmin()"  [style.cursor]="'pointer'"   routerLink="/bdd" >Bdd&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      &nbsp;&nbsp;
       <span [style.cursor]="'pointer'" routerLink="/sports1" >Sports1</span>&nbsp;&nbsp;
       <span class="flexExpand"></span>
+     
+      <span  *ngIf="isadmin()"  [style.cursor]="'pointer'"   routerLink="/bdd" >Bdd</span>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <span *ngIf="isadmin()" [style.cursor]="'pointer'" routerLink="/users" >Users</span>&nbsp;&nbsp;|&nbsp;&nbsp;
       <span [style.cursor]="'pointer'" routerLink="/login" >Disconnect</span>&nbsp;&nbsp;
     </mat-toolbar-row>
   </mat-toolbar>

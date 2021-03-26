@@ -17,6 +17,7 @@ import { Sports1Component } from './sports1/sports1.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BddComponent } from './bdd/bdd.component';
 import { LoginComponent } from './login/login.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { LoginComponent } from './login/login.component';
     MenuComponent,
     Sports1Component,
     BddComponent,
-    LoginComponent
+    LoginComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

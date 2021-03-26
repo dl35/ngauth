@@ -1,10 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { combineLatest, merge, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, merge, Observable, of, Subject } from 'rxjs';
 import { startWith, debounceTime, distinctUntilChanged, map, tap, switchMap, takeUntil } from 'rxjs/operators';
 import { MySports } from '../datas/mysports';
 import { Sports1Service } from '../services/sports1.service';
 import { MySportsPage } from '../datas/mysportspage';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { SportsDataSource } from './SportsDataSource';
+import { MatChipInputEvent } from '@angular/material/chips/chip-input';
 
 @Component({
   selector: 'app-sports1',
@@ -14,12 +18,27 @@ import { MySportsPage } from '../datas/mysportspage';
 export class Sports1Component implements OnInit, OnDestroy {
 
 
+
+  @ViewChild(CdkVirtualScrollViewport) viewPort: CdkVirtualScrollViewport;
+  total$ = new BehaviorSubject<string>('0');
+  ds: SportsDataSource ;
+
+
+  filter = { search: [] };
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
+
+
+
   subject$ = new Subject();
   datas$ : Observable<MySportsPage>;
   page: number = 1 ;
   nbpages: number = 1 ;
  
-  search: FormControl = new FormControl('');
+
   constructor(private serv: Sports1Service ) {}
 
 
@@ -27,68 +46,35 @@ export class Sports1Component implements OnInit, OnDestroy {
 
   
 
-  
-
-    // startWith ajoute de '' dans le flux
-    // debounceTime Émet une valeur après un laps de temps
-    // distinctUntilChanged() , renvoi un observablesi avec des valeurs distinctes
-     this.search.valueChanges.pipe(         // startWith(''),
-                                    debounceTime(500),
-                                    distinctUntilChanged(),
-                                    takeUntil(this.subject$)
-                                  ).subscribe( 
-                                     v => this.serv.get( 1 ,v )
-                                             )
       
-       
-      this.datas$ = this.serv.datas$.pipe(
-          tap( ( m  ) => { if( m) { this.page = m.current ; this.nbpages = m.pages ;  } } )
-                )
-      this.toPage(1);
-  }
-
-
-  toPage(page: number){
-    if ( page < 1 ) {
-      page = 1 ;
-    } else if ( page > this.nbpages ) {
-      page = this.nbpages ;
-    } 
-    this.serv.get( page , this.search.value  );
+   this.ds = new SportsDataSource(this.total$ , this.serv );
    
-    
-  }  
-
-
-  delete(item: MySports) {
-      this.serv.delete( item.id );
-  } 
-
-  post() {
-
-    const a = ["Dario","Guido","isidro","Hilario","Javier","Manuel"];
-    const b = ["Cordobes","Napoleon","Vasquez","Neymar","Messi","Di-Maria"];
-
-    const f=  a[Math.floor(Math.random() * a.length)]; 
-    const l=  b[Math.floor(Math.random() * b.length)]; 
-
-
-    const obj: MySports = {sexe :'M' , firstname: f , lastname: l , discipline: 'BIKE' , duree: 60 , day: new Date().toISOString() }  
-    this.serv.post( obj );
+  }
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.filter.search.push(value.trim());
+    }
+    if (input) {
+      input.value = '';
+    }
+    this.viewPort.scrollToIndex(0);
+    this.ds.refreshData( this.filter );
   }
 
-  put(item: MySports) {
-
-      const a = ["Dario","Guido","isidro","Hilario","Javier","Manuel"];
-      const b = ["Cordobes","Napoleon","Vasquez","Neymar","Messi","Di-Maria"];
-
-      const f=  a[Math.floor(Math.random() * a.length)]; 
-      const l=  b[Math.floor(Math.random() * b.length)]; 
-
-    const obj: MySports = { sexe :'M' , firstname: f , lastname: l , discipline: 'SWIM' , duree: 60 , day: new Date().toISOString() }  
-    this.serv.put(item.id , obj );
+  remove(item: any): void {
+    const index = this.filter.search.indexOf(item);
+    if (index >= 0) {
+      this.filter.search.splice(index, 1);
+    }
+    this.viewPort.scrollToIndex(0);
+    this.ds.refreshData( this.filter );
   }
 
+    delete( item: MySports ){
+      this.ds.delete( item ) ;
+    }
 
 
   ngOnDestroy(): void {

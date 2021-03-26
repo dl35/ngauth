@@ -20,9 +20,10 @@ var mysql_config =
 }
 
 var listLogins = [
-	{id:99 , role: 'admin' , user:'admin@test.fr'  , passwd: 'admin'  },
-	{id:33 , role: 'user'  , user:'user@test.fr' , passwd: 'user' },
-
+	{id:99, role: 'admin' , user:'admin@test.fr'  , passwd: 'admin'  },
+	{id:1 , role: 'user'  , user:'user1@test.fr'  , passwd: 'user' },
+	{id:2 , role: 'user'  , user:'user2@test.fr'  , passwd: 'user' },
+	{id:3 , role: 'user'  , user:'user3@test.fr'  , passwd: 'user' },
 ]
 
 

@@ -2,6 +2,45 @@ body {
     text-align: center;
 }
 
+.product-scroll-viewport {
+    height: 500px;
+    width: 70%;
+    margin:0 auto;
+    margin-top:10px;
+  }
+
+
+  .product-item {
+    height: 30px;
+    _width: 60%;
+    display: flex;
+    margin-top:15px;
+    margin-left:15px;
+    margin-right:15px;
+  }
+  .product-item:hover {
+    cursor: pointer;
+}
+
+
+
+  cdk-virtual-scroll-viewport {
+    border: none;
+  }
+
+  .mat-chip {
+    font-size: 12px;
+     min-height: 20px;
+  }
+
+
+
+
+
+
+
+
+
 
 
 .style-card {

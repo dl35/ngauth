@@ -1,42 +1,67 @@
 <div class='cbooks'>
-    <div>
-    <pre>
-    crud of sports avec pagination
-    filtre de recheche 
-    utilisation de behaviorSubject dans le service 
-    méthodes get, post, put, delete ...
-    filtre de recherches
-    pipe async
-    </pre>
-    </div>
-    <div *ngIf="(datas$ | async) ;let list">
-    <pre>
-    total items: {{ list.total }}
-    nombre pages: {{ page }} / {{list.pages}}    
-    items / page: {{list.datas.length}}
-    </pre>
-    </div>
 
-    <div>
-        <button mat-flat-button color="primary" [disabled]="page == 1" (click)="toPage(1)"      ><< First</button> &nbsp; 
-        <button mat-flat-button color="primary" [disabled]="page == 1" (click)="toPage(page-1)"      >< Prec</button> &nbsp;
-        <button mat-flat-button color="primary" [disabled]="page == nbpages" (click)="toPage(+page+1)"   >Next ></button>&nbsp; 
-        <button mat-flat-button color="primary" [disabled]="page == nbpages"  (click)="toPage(nbpages)"   >Last >></button> 
-      </div>
+  <div *ngIf="(datas$ | async) ;let list"  >
+  <button mat-button color="primary" >items: {{ list.total }}</button>
+  <button mat-button color="primary" >pages: {{ page }} / {{list.pages}} </button>
+  <button mat-button color="accent"  >items / page: {{list.datas.length}}</button>
+  </div>
 
 
-    <mat-form-field class="cform-field">
-        <mat-label>rechercher...</mat-label>
-        <input matInput type="text" [formControl]="search">
-      </mat-form-field>
-      &nbsp;&nbsp;
+  <div  style=" display: inline-block;margin-top:10px; width:100%;display: flex;align-items: flex-end;">
+    <mat-form-field style="font-size: 12px;margin-left:2%;width:80%;">
+             <mat-chip-list #chipList aria-label="recherche selection"  color="accent" >
+               <mat-chip *ngFor="let item of filter.search" [selectable]="selectable"  color="primary" selected
+                        [removable]="removable" (removed)="remove(item)">
+                 {{item}}
+                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+               </mat-chip>
+               <input placeholder="medias, id, params..."
+                      [matChipInputFor]="chipList"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      [matChipInputAddOnBlur]="addOnBlur"
+                      (matChipInputTokenEnd)="add($event)">
+             </mat-chip-list>
+                  </mat-form-field>
+         
+     </div>
+
+
+
+
+    <cdk-virtual-scroll-viewport itemSize="55" class="product-scroll-viewport"  >
  
 
-    <mat-button-toggle  (click)="post()">Add</mat-button-toggle> &nbsp; 
+      <mat-card class="product-item mat-elevation-z7"  *cdkVirtualFor="let item of ds ; let index = index; let odd = odd;"  >
+        
+        <mat-card-header (click)="delete(item)">
+          <mat-card-title>
+            <button mat-mini-fab color="accent" aria-label="icon button with a menu icon">
+              {{index+1}}
+            </button>
+            &nbsp; {{ item.firstname  }} {{ item.lastname  }} </mat-card-title>
+       
+        </mat-card-header>
+    
+        <div *ngIf="!item">
+          Loading ...
+        </div>
 
+      </mat-card>
+    
+    
+    
+    </cdk-virtual-scroll-viewport>
+
+
+
+
+
+
+
+
+
+<!--
     <div *ngFor="let item of (datas$ | async)?.datas " >
-      
-   
       <mat-card class="mat-elevation-z5 style-card">
         <mat-card-header>
         
@@ -59,10 +84,8 @@
       
         </mat-card-header>
         </mat-card>
+      </div>
     
-        
-
-        
-    </div>
+  -->
     </div>
 

@@ -213,7 +213,7 @@ router.get('/pages/:page', function(req, res, next) {
   }
   
 
-  var LIMIT = 10 ;
+  var LIMIT = 20 ;
   var pages = 1 ;
   var total = 0; 
 
