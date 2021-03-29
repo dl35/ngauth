@@ -8,6 +8,7 @@ var router = express.Router();
 var  dbtool = require('./dbtool'); 
 //var config = require('../config');
 var server = require('../app');
+const config = require('../config');
 
 //console.log('****** path route is ', __dirname  ) ;
 //console.log('****** process route is ', process.cwd()  ) ;
@@ -21,10 +22,8 @@ var infos =[
   { route: '/bdd/sports/list', message: 'get all items'},
   { route: '/bdd/sports/delete', message: 'delete all items'},
   { route: '/bdd/sports/drop', message: 'remove table'},
-  { route: '/bdd/books/create', message: 'Create table and add datas'},
-  { route: '/bdd/books/list', message: 'get all items'},
-  { route: '/bdd/books/delete', message: 'delete all items'},
-  { route: '/bdd/books/drop', message: 'remove table'},
+  { route: '/bdd/users/create', message: 'Create table users and init users'},
+  
 ]
 
 
@@ -64,8 +63,42 @@ router.get( '/sports/create' , function(req, res , next) {
           });
     })
 
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+// creation de la table prod.sports
+router.get( '/users/create' , function(req, res , next) {
+  //id, name, surname , discipline , date , duree
+  var conn = undefined ;
+  var query = "CREATE TABLE IF NOT EXISTS prod.users (id INT AUTO_INCREMENT PRIMARY KEY, user VARCHAR(255), passwd VARCHAR(10), firstname VARCHAR(255), lastname VARCHAR(255) , role ENUM('admin','user') ) " ;
+  dbtool.connect(server.pool).then(con => {
+     conn = con;
+     return dbtool.doQuery(conn, query, [] );
+   })
+    .then(result => {
+      query ="DELETE FROM prod.users ";
+      return dbtool.doQuery(conn, query, [] )})
+    .then(result => {
+      query ="INSERT INTO prod.users (id, user, passwd, firstname, lastname, role) VALUES ?";
+      var p = addUsers();
+      return dbtool.doQuery(conn, query, [p] )})
+    .then(result => {
+     query ="SELECT count(*) as total FROM prod.users ";
+     return dbtool.doQuery(conn, query, [] )})
+    .then(result =>  { 
+     var nb = result[0].total ;
+     conn.release();
+     return res.json({ status:200 , message :'inserted datas in table users ' + nb  });
+   }).catch(error => {
+     if (conn) {
+       conn.release();
+     }
+     return next( error );
+    });
+})
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function  addUsers( ) {
+  return  config.listUsers;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 function  addDatas( maxDatas ) {

@@ -19,11 +19,11 @@ var mysql_config =
 	dateStrings		: false
 }
 
-var listLogins = [
-	{id:99, role: 'admin' , user:'admin@test.fr'  , passwd: 'admin'  },
-	{id:1 , role: 'user'  , user:'user1@test.fr'  , passwd: 'user' },
-	{id:2 , role: 'user'  , user:'user2@test.fr'  , passwd: 'user' },
-	{id:3 , role: 'user'  , user:'user3@test.fr'  , passwd: 'user' },
+var listUsers = [
+	[1, 'admin@test.fr', 'admin', 'Mike', 'Mike', 'admin' ],
+	[2, 'user1@test.fr', 'user1', 'Bill', 'Bill', 'user' ],
+	[3, 'user2@test.fr', 'user2', 'John', 'John', 'user' ],
+	[4, 'user3@test.fr', 'user3', 'Clint', 'Clint', 'user' ]
 ]
 
 
@@ -80,7 +80,7 @@ function validRole( roles ) {
 module.exports.development = development;
 module.exports.default_port = default_port;
 module.exports.mysql_config = mysql_config;
-module.exports.listLogins = listLogins;
+module.exports.listUsers = listUsers;
 module.exports.validToken = validToken;
 module.exports.generateToken = generateToken;
 module.exports.validRole = validRole;

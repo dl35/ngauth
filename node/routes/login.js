@@ -1,7 +1,8 @@
 var express = require('express');
-
+var  dbtool = require('./dbtool'); 
 const Joi = require('joi');
 var router = express.Router();
+var server = require('../app');
 var config = require('../config');
 
 
@@ -14,54 +15,61 @@ const schema = Joi.object().keys({
 
 
 
-router.post('/', (req, res) => {
+router.post('/', (req, res , next ) => {
 
     var datas = req.body ;
     var result = schema.validate( datas );
     if (result.error) {
         return res.status(400).json({ error: result.error.details[0].message });
       }
-    
-    const u = req.body.user ;
-    const p = req.body.passwd ;
-   
-    const v =  validLogin(u,p) ;
-
-    if( v == false ) {
-       return  res.status(400).json( {message: 'user or passd is incorrect'} ) ;
-    } else {
-        return res.json(v)
-
-    }
-
-
+      return  getLogin( req, res, next );
     
   })
 
 
+function getLogin( req , res ,next) {
 
+      const user = req.body.user ;
+      const passwd = req.body.passwd ;
 
- function validLogin( u , p ) {
+      var conn = undefined ;
+      var query = "SELECT id, role  FROM prod.users WHERE user = ? AND passwd = ? ";
+      var p = [ user, passwd ] ;
+      
+     
 
-  console.log( u , p   );
+      dbtool.connect(server.pool).then(con => {
+          conn = con;
+          return dbtool.doQuery(conn, query, p );
+       }).then(result => {
+          conn.release();
+          conn = undefined ;
+          if( result[0] ) {
+            const r = result[0];
+            const obj = {id:r.id, role:r.role} ;
+            const token= config.generateToken( obj );
+            const v = { token , ...obj} ;
+            return res.json( v) ;
+          } else {
+            return  res.status(400).json( {message: 'user or passwd is incorrect'} ) ;
+          }
  
-    var logins =  config.listLogins  ;
- 
-    
-    var user = logins.find( e =>  e.user == u && e.passwd == p  ) ;
-    if( user ) {
-        const obj = {id:user.id,role:user.role};
-        const token= config.generateToken(obj);
-        const v = { token , ...obj } ;
-        return v ;
-    } else {
 
-      return false;
+      }).catch(error => {
+        if (conn) {
+          conn.release();
+        }
+          return next( error );
+        
+       });
+
+  
+
+
+
     }
 
 
-
- }
 
 
 

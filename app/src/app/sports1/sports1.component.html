@@ -33,7 +33,7 @@
 
       <mat-card class="product-item mat-elevation-z7"  *cdkVirtualFor="let item of ds ; let index = index; let odd = odd;"  >
         
-        <mat-card-header (click)="delete(item)">
+        <mat-card-header  (click)="delete(item)">
           <mat-card-title>
             <button mat-mini-fab color="accent" aria-label="icon button with a menu icon">
               {{index+1}}

@@ -47,9 +47,10 @@ app.use(bodyParser.raw());
 app.use('/login' , login);
 
 
-
 app.use('/sports' , config.validToken  , mysports);
+app.use('/users' , config.validToken  , mysports);
 app.use('/bdd' ,config.validToken, mybdd);
+
 
 
 
