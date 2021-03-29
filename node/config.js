@@ -31,9 +31,6 @@ var listUsers = [
 
 
 function validToken( req,res,next ) {
-
-	console.log( req.baseUrl );
-
     const authheader = req.headers['authorization'];
     const token = authheader && authheader.split(' ')[1];
     if( token == null ) return res.status(401).json({message :'Unauthorized' });
@@ -41,7 +38,8 @@ function validToken( req,res,next ) {
       if( err ) {
         return res.status(403).send( err.message ) ;
        }
-      req.profile = value.profile ;
+      req.role = value.role ;
+	  req.id = value.id ;
       next() ;
     } )
   

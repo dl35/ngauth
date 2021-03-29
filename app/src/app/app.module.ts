@@ -18,6 +18,8 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BddComponent } from './bdd/bdd.component';
 import { LoginComponent } from './login/login.component';
 import { UsersComponent } from './users/users.component';
+import { UsersEditComponent } from './users-edit/users-edit.component';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { UsersComponent } from './users/users.component';
     Sports1Component,
     BddComponent,
     LoginComponent,
-    UsersComponent
+    UsersComponent,
+    UsersEditComponent
+    
   ],
   imports: [
     BrowserModule,

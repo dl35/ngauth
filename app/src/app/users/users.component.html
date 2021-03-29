@@ -1,1 +1,18 @@
-<p>users works!</p>
+
+
+
+
+
+<div>
+
+<mat-card class="product-item mat-elevation-z7"  *ngFor="let item of( datas$ | async ); " (ngSubmit)="edit(item)"  >
+        
+    <mat-card-header  (click)="edit(item)">
+      <mat-card-title>
+        <button mat-mini-fab color="accent" aria-label="icon button with a menu icon">
+          {{ item.id }}
+        </button>
+        &nbsp; {{ item.firstname  }} {{ item.lastname  }} </mat-card-title>
+    </mat-card-header>
+</mat-card>    
+</div>

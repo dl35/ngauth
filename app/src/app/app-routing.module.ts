@@ -6,6 +6,7 @@ import { BddComponent } from './bdd/bdd.component';
 import { LoginComponent } from './login/login.component';
 import { GuardGuard } from './guard/guard.guard';
 import { UsersComponent } from './users/users.component';
+import { UsersEditComponent } from './users-edit/users-edit.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -17,7 +18,9 @@ const routes: Routes = [
      
       { path: 'bdd', component: BddComponent },
       { path: 'sports1', component: Sports1Component },
-      { path: 'users', component: UsersComponent }
+      { path: 'users', component: UsersComponent },
+      { path: 'users/add', component: UsersEditComponent },
+      { path: 'users/edit/:id', component: UsersEditComponent },
      
     ]
   },

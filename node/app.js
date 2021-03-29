@@ -12,6 +12,7 @@ const mysql = require('mysql');
 
 const mysports= require('./routes/mysports');
 const mybdd= require('./routes/mybdd');
+const myusers= require('./routes/myusers');
 
 const login = require('./routes/login');
 
@@ -48,7 +49,7 @@ app.use('/login' , login);
 
 
 app.use('/sports' , config.validToken  , mysports);
-app.use('/users' , config.validToken  , mysports);
+app.use('/users' , config.validToken  , myusers);
 app.use('/bdd' ,config.validToken, mybdd);
 
 
